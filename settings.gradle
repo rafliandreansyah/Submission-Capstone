@@ -14,3 +14,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Submission-Capstone"
 include ':app'
+include ':core'
+include ':favorite'

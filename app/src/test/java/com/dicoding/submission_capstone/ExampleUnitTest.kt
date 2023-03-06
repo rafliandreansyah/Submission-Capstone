@@ -1,4 +1,4 @@
-package com.example.submission_capstone
+package com.dicoding.submission_capstone
 
 import org.junit.Test
 

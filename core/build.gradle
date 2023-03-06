@@ -1,24 +1,22 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'com.google.dagger.hilt.android'
 }
 
-apply from:'../shared_dependencies.gradle'
+apply from: '../shared_dependencies.gradle'
 
 android {
-    namespace 'com.dicoding.submission_capstone'
+    namespace 'com.dicoding.submission_capstone.core'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.submission_capstone"
         minSdk 21
         targetSdk 33
-        versionCode 1
-        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -34,13 +32,8 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-
-    buildFeatures{
-        viewBinding true
-    }
-    dynamicFeatures = [':favorite']
 }
 
 dependencies {
-    implementation project(":core")
+
 }
