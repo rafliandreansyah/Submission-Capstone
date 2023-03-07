@@ -1,4 +1,4 @@
 package com.dicoding.submission_capstone.core.app
 
 
-private val API_KEY = "048a607156854231a0644c7cd6e4f318"
+val API_KEY = "048a607156854231a0644c7cd6e4f318"

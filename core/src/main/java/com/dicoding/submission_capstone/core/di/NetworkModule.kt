@@ -1,6 +1,6 @@
 package com.dicoding.submission_capstone.core.di
 
-import com.dicoding.submission_capstone.core.data.source.remote.network.ApiInterface
+import com.dicoding.submission_capstone.core.data.source.remote.network.ApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,7 +30,7 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideApiService(okHttpClient: OkHttpClient): ApiInterface {
+    fun provideApiService(okHttpClient: OkHttpClient): ApiService {
         val retrofit = Retrofit.Builder()
             .baseUrl("https://api.rawg.io/api")
             .addConverterFactory(GsonConverterFactory.create())
@@ -38,7 +38,7 @@ class NetworkModule {
             .client(okHttpClient)
             .build()
 
-        return retrofit.create(ApiInterface::class.java)
+        return retrofit.create(ApiService::class.java)
     }
 
 
