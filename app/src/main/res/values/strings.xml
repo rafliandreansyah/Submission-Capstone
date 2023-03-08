@@ -3,4 +3,13 @@
     <string name="title_favorite">favorite</string>
     <string name="new_and_trending">New And Trending</string>
     <string name="based_on_player_counts_and_release_date">Based on player counts and release date</string>
+    <string name="background_image_game">Background image game</string>
+    <string name="icon_xbox">icon xbox</string>
+    <string name="icon_playstation">icon playstation</string>
+    <string name="icon_apple">icon apple</string>
+    <string name="icon_android">icon android</string>
+    <string name="icon_windows">icon windows</string>
+    <string name="icon_linux">icon linux</string>
+    <string name="save">Save</string>
+    <string name="genre">Genre</string>
 </resources>
