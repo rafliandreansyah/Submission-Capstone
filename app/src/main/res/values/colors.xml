@@ -13,4 +13,5 @@
     <color name="colorPurpleDark">#393053</color>
     <color name="colorBackgroundDark">#18122B</color>
     <color name="colorText">#EEEEEE</color>
+    <color name="colorTeal">#03C988</color>
 </resources>
