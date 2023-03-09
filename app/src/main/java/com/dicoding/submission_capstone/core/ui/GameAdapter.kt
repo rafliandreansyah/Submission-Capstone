@@ -13,7 +13,9 @@ import com.dicoding.submission_capstone.databinding.ItemGameBinding
 import com.google.android.material.chip.Chip
 import javax.inject.Inject
 
-class GameAdapter @Inject constructor(private var listGame: List<Game>, private val context: Context): RecyclerView.Adapter<GameAdapter.GamesViewHolder>() {
+class GameAdapter @Inject constructor(private val context: Context): RecyclerView.Adapter<GameAdapter.GamesViewHolder>() {
+
+    private var listGame: List<Game>? = null
 
     fun setData(listGame: List<Game>) {
         this.listGame = listGame
@@ -27,10 +29,12 @@ class GameAdapter @Inject constructor(private var listGame: List<Game>, private 
         return GamesViewHolder(itemBinding)
     }
 
-    override fun getItemCount(): Int = listGame.size
+    override fun getItemCount(): Int = if (listGame != null) listGame!!.size else 0
 
     override fun onBindViewHolder(holder: GamesViewHolder, position: Int) {
-        holder.bind(listGame[position])
+        if (listGame != null) {
+            holder.bind(listGame!![position])
+        }
     }
 
     inner class GamesViewHolder(private val binding: ItemGameBinding): RecyclerView.ViewHolder(binding.root) {

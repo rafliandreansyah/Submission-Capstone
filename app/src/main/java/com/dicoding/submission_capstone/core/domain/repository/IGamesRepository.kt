@@ -8,6 +8,6 @@ import io.reactivex.Flowable
 
 interface IGamesRepository {
 
-    fun getGames(): Flowable<ApiResponse<Resource<List<Game>>>>
+    fun getGames(): Flowable<Resource<List<Game>>>
 
 }
