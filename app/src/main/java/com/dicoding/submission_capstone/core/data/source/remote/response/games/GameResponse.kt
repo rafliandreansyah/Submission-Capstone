@@ -21,7 +21,7 @@ data class GameResponse(
     @SerializedName("playtime")
     var playtime: Int?,
     @SerializedName("rating")
-    var rating: Int?,
+    var rating: Double?,
     @SerializedName("rating_top")
     var ratingTop: Int?,
     @SerializedName("ratings_count")

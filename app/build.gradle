@@ -38,10 +38,10 @@ android {
     buildFeatures{
         viewBinding true
     }
-    dynamicFeatures = [':favorite']
+    dynamicFeatures = []
 }
 
 dependencies {
-    implementation project(":core")
+    //implementation project(":core")
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swiperefresh_version"
 }

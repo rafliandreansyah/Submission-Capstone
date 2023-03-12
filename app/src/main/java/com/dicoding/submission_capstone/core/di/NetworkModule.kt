@@ -32,7 +32,7 @@ class NetworkModule {
     @Provides
     fun provideApiService(okHttpClient: OkHttpClient): ApiService {
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://api.rawg.io/api")
+            .baseUrl("https://api.rawg.io/")
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(okHttpClient)

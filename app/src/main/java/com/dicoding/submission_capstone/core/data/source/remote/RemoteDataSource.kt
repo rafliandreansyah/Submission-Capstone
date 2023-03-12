@@ -28,6 +28,7 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
                 val listGame = response.results
                 resultData.onNext((if (listGame?.isNotEmpty() == true) ApiResponse.Success(listGame) else ApiResponse.Empty) as ApiResponse<List<GameResponse>>)
             }, { error ->
+                error.printStackTrace()
                 resultData.onNext(ApiResponse.Error(error.message.toString()))
             })
 
