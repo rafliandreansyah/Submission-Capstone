@@ -1,4 +1,4 @@
-package com.dicoding.submission_capstone.home
+package com.dicoding.submission_capstone.ui.home
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

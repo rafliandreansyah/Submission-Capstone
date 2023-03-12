@@ -1,4 +1,4 @@
-package com.dicoding.submission_capstone.home
+package com.dicoding.submission_capstone.ui.home
 
 import androidx.lifecycle.LiveDataReactiveStreams
 import androidx.lifecycle.MutableLiveData
