@@ -15,7 +15,7 @@
         android:theme="@style/Theme.SubmissionCapstone"
         tools:targetApi="31" >
         <activity
-            android:name=".DetailGameActivity"
+            android:name=".ui.detail_game.DetailGameActivity"
             android:exported="false" />
         <activity
             android:name="com.dicoding.submission_capstone.MainActivity"

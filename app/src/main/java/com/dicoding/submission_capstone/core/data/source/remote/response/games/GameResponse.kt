@@ -11,7 +11,7 @@ data class GameResponse(
     @SerializedName("background_image")
     var backgroundImage: String?,
     @SerializedName("id")
-    var id: Int?,
+    var id: Long?,
     @SerializedName("metacritic")
     var metacritic: Int?,
     @SerializedName("name")

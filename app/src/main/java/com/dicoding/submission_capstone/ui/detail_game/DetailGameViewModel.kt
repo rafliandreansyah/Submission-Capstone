@@ -7,8 +7,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailGameViewModel @Inject constructor(private val useCase: GameUseCase): ViewModel() {
+class DetailGameViewModel @Inject constructor(val gameUseCase: GameUseCase): ViewModel() {
 
-    private fun getDetailGame(id: String) = LiveDataReactiveStreams.fromPublisher(useCase.getDetailGames(id))
+    var idGame: Long = 0
+    fun getDetailGame(id: Long) = LiveDataReactiveStreams.fromPublisher(gameUseCase.getDetailGames(id))
 
 }

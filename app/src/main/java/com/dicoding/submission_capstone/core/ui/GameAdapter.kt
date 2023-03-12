@@ -21,9 +21,13 @@ import javax.inject.Inject
 class GameAdapter @Inject constructor(@ActivityContext private val context: Context): RecyclerView.Adapter<GameAdapter.GamesViewHolder>() {
 
     private var listGame: List<Game>? = null
-
+    private lateinit var listener: (id: Long) -> Unit
     fun setData(listGame: List<Game>) {
         this.listGame = listGame
+    }
+
+    fun setOnItemClickListener(listener: (id: Long) -> Unit){
+        this.listener = listener
     }
 
     override fun onCreateViewHolder(
@@ -70,6 +74,10 @@ class GameAdapter @Inject constructor(@ActivityContext private val context: Cont
             binding.icAndroid.visibility = if(platforms?.contains("android") == true) View.VISIBLE else View.GONE
             binding.icWindows.visibility = if (platforms?.contains("pc") == true) View.VISIBLE else View.GONE
             binding.icLinux.visibility = if(platforms?.contains("linux") == true) View.VISIBLE else View.GONE
+
+            binding.clItem.setOnClickListener {
+                game.id?.let { it1 -> listener.invoke(it1) }
+            }
         }
 
     }

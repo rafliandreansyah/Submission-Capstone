@@ -1,5 +1,6 @@
 package com.dicoding.submission_capstone.ui.home
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.submission_capstone.core.data.source.Resource
 import com.dicoding.submission_capstone.core.ui.GameAdapter
 import com.dicoding.submission_capstone.databinding.ActivityGamesBinding
+import com.dicoding.submission_capstone.ui.detail_game.DetailGameActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -47,7 +49,11 @@ class GamesActivity : AppCompatActivity() {
                 rvGames.layoutManager = LinearLayoutManager(this@GamesActivity)
                 rvGames.adapter = gameAdapter
                 rvGames.setNestedScrollingEnabled(false);
-
+                gameAdapter.setOnItemClickListener {
+                    val intent = Intent(this@GamesActivity, DetailGameActivity::class.java)
+                    intent.putExtra(DetailGameActivity.GAME_ID, it)
+                    startActivity(intent)
+                }
 
                 when(dataGames) {
                     is Resource.Success -> {

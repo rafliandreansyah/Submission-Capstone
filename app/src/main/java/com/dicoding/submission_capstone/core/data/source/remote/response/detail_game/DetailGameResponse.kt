@@ -33,7 +33,7 @@ data class DetailGameResponse(
     @SerializedName("genres")
     var genres: List<GenreResponse>?,
     @SerializedName("id")
-    var id: Int?,
+    var id: Long?,
     @SerializedName("movies_count")
     var moviesCount: Int?,
     @SerializedName("name")
@@ -48,8 +48,6 @@ data class DetailGameResponse(
     var platforms: List<PlatformResponse>?,
     @SerializedName("playtime")
     var playtime: Int?,
-    @SerializedName("publishers")
-    var publishers: List<PublisherResponse>?,
     @SerializedName("rating")
     var rating: Double?,
     @SerializedName("rating_top")

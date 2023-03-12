@@ -19,7 +19,17 @@
         app:layout_constraintTop_toTopOf="parent"
         android:contentDescription="@string/button_back" />
 
+    <ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -36,8 +46,8 @@
                 android:id="@+id/img_bg_games"
                 android:layout_width="match_parent"
                 android:layout_height="260dp"
-                android:src="@color/black"
-                android:contentDescription="@string/background_game"/>
+                android:contentDescription="@string/background_game"
+                android:src="@color/black" />
 
 
             <LinearLayout
@@ -47,69 +57,70 @@
                 android:paddingHorizontal="20dp"
                 android:paddingTop="20dp"
                 android:paddingBottom="40dp">
-                
-                <TextView
-                    android:id="@+id/tv_title_game"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:text="Tomb Raider (2013)"
-                    style="@style/TextTitleBoldStyle_30SP"/>
 
                 <TextView
+                    android:id="@+id/tv_title_game"
+                    style="@style/TextTitleBoldStyle_30SP"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/about"
+                    tools:text="Tomb Raider (2013)" />
+
+                <TextView
+                    style="@style/TextLabelRegular_16SP"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    style="@style/TextLabelRegular_16SP"/>
+                    android:text="@string/about" />
 
                 <TextView
                     android:id="@+id/tv_description_game"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
                     style="@style/TextLight"
-                    tools:text="Sired in an act of vampire insurrection, your existence ignites the war for Seattle's blood trade. Enter uneasy alliances with the creatures who control the city and uncover the sprawling conspiracy which plunged Seattle into a bloody civil war between powerful vampire factions. ♞Become the Ultimate Vampire Immerse yourself in the World of Darkness and live out your vampire fantasy in a city filled with intriguing characters that react to your choices. You and your unique disciplines are a weapon in our forward-driving, fast-moving, melee-focussed…"/>
-
-                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/platform"
+                    android:layout_marginTop="4dp"
+                    tools:text="Sired in an act of vampire insurrection, your existence ignites the war for Seattle's blood trade. Enter uneasy alliances with the creatures who control the city and uncover the sprawling conspiracy which plunged Seattle into a bloody civil war between powerful vampire factions. ♞Become the Ultimate Vampire Immerse yourself in the World of Darkness and live out your vampire fantasy in a city filled with intriguing characters that react to your choices. You and your unique disciplines are a weapon in our forward-driving, fast-moving, melee-focussed…" />
+
+                <TextView
                     style="@style/TextLabelRegular_16SP"
-                    android:layout_marginTop="30dp"/>
-
-                <LinearLayout
-                    android:id="@+id/ll_platform"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/genre"
                     android:layout_marginTop="30dp"
-                    style="@style/TextLabelRegular_16SP"/>
+                    android:text="@string/platform" />
 
-                <LinearLayout
-                    android:id="@+id/ll_genre"
+                <com.google.android.flexbox.FlexboxLayout
+                    android:id="@+id/flex_platform"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:orientation="horizontal"/>
+                    app:flexWrap="wrap"/>
 
                 <TextView
+                    style="@style/TextLabelRegular_16SP"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/developer"
-                    style="@style/TextLabelRegular_16SP"
-                    android:layout_marginTop="30dp"/>
+                    android:layout_marginTop="30dp"
+                    android:text="@string/genre" />
 
-                <LinearLayout
-                    android:id="@+id/ll_developer"
+                <com.google.android.flexbox.FlexboxLayout
+                    android:id="@+id/flex_genre"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:orientation="horizontal"/>
+                    app:flexWrap="wrap" />
+
+                <TextView
+                    style="@style/TextLabelRegular_16SP"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:text="@string/developer" />
+
+                <com.google.android.flexbox.FlexboxLayout
+                    android:id="@+id/flex_developer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    app:flexWrap="wrap"
+                    />
 
 
                 <Button
@@ -117,10 +128,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="40dp"
-                    android:textAllCaps="false"
-                    android:paddingVertical="12dp"
                     android:backgroundTint="@color/colorPurpleLight"
-                    android:text="@string/save_to_favorite"/>
+                    android:paddingVertical="12dp"
+                    android:text="@string/save_to_favorite"
+                    android:textAllCaps="false" />
 
             </LinearLayout>
 

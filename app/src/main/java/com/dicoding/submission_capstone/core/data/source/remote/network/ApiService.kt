@@ -13,5 +13,5 @@ interface ApiService {
     fun getGames(@Query("key") key: String? = API_KEY): Flowable<ListGameResponse>
 
     @GET("/api/games/{id}")
-    fun getDetailGame(@Path("id") id: String, @Query("key") key: String? = API_KEY): Flowable<DetailGameResponse>
+    fun getDetailGame(@Path("id") id: Long, @Query("key") key: String? = API_KEY): Flowable<DetailGameResponse>
 }
