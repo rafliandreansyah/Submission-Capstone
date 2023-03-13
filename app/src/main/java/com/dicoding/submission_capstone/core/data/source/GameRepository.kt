@@ -1,48 +1,48 @@
 package com.dicoding.submission_capstone.core.data.source
 
+import android.provider.ContactsContract.Data
+import com.dicoding.submission_capstone.core.data.source.local.LocalDataSource
 import com.dicoding.submission_capstone.core.data.source.remote.RemoteDataSource
 import com.dicoding.submission_capstone.core.data.source.remote.network.ApiResponse
 import com.dicoding.submission_capstone.core.data.source.remote.network.ApiService
+import com.dicoding.submission_capstone.core.data.source.remote.response.games.GameResponse
+import com.dicoding.submission_capstone.core.data.source.remote.response.games.ListGameResponse
 import com.dicoding.submission_capstone.core.domain.model.DetailGame
 import com.dicoding.submission_capstone.core.domain.model.Game
 import com.dicoding.submission_capstone.core.domain.repository.IGamesRepository
 import com.dicoding.submission_capstone.core.util.DataMapper
 import io.reactivex.BackpressureStrategy
+import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 
-class GameRepository @Inject constructor(private val remoteDataSource: RemoteDataSource): IGamesRepository {
+class GameRepository @Inject constructor(private val remoteDataSource: RemoteDataSource, private val localDataSource: LocalDataSource): IGamesRepository {
     override fun getGames(): Flowable<Resource<List<Game>>> {
-        val resultData = PublishSubject.create<Resource<List<Game>>>()
-
-        resultData.onNext(Resource.Loading())
-        val source = remoteDataSource.getGames();
-        source.observeOn(Schedulers.io())
-            .subscribeOn(AndroidSchedulers.mainThread())
-            .take(1)
-            .subscribe{ data ->
-                when (data) {
-                    is ApiResponse.Success -> {
-                        source.unsubscribeOn(Schedulers.io())
-                        resultData.onNext(Resource.Success(data = data.data.map { DataMapper.gameResponseToGameData(it) }))
-                    }
-                    is ApiResponse.Error -> {
-                        source.unsubscribeOn(Schedulers.io())
-                        resultData.onNext(Resource.Error(data.errorMessage))
-                    }
-                    is ApiResponse.Empty -> {
-                        source.unsubscribeOn(Schedulers.io())
-                        resultData.onNext(Resource.Success(ArrayList()))
-                    }
-                }
-
+        return object : NetworkBoundResource<List<Game>, List<GameResponse>>(){
+            override fun loadFromDb(): Flowable<List<Game>> {
+                return localDataSource.getGames().map { data -> DataMapper.gameWithPlatformsAndGenresToGame(data) }
             }
 
+            override fun createCall(): Flowable<ApiResponse<List<GameResponse>>> {
+                return remoteDataSource.getGames()
+            }
 
-        return resultData.toFlowable(BackpressureStrategy.BUFFER)
+            override fun saveCallResult(data: List<GameResponse>) {
+                val gameData = DataMapper.gameResponseToGameWithPlatformsAndGenres(data)
+                localDataSource.insertListGameToDatabase(gameData)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe()
+            }
+
+            override fun shouldFetch(data: List<Game>): Boolean {
+                return true
+            }
+
+        }.asFlowable()
 
     }
 

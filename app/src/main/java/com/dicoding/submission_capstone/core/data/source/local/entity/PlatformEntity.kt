@@ -15,9 +15,9 @@ import com.google.gson.annotations.SerializedName
     )
 ])
 data class PlatformEntity(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo("id")
-    var platformId: Long,
+    var platformId: Long = 0,
     @ColumnInfo("game_id")
     var gameId: Long,
     @ColumnInfo("name")

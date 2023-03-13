@@ -18,9 +18,9 @@ import com.google.gson.annotations.SerializedName
     ]
 )
 data class DeveloperEntity(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo("developer_id")
-    var developerId: Long,
+    var developerId: Long = 0,
     @ColumnInfo("game_id")
     var gameId: Long,
     @ColumnInfo("games_count")

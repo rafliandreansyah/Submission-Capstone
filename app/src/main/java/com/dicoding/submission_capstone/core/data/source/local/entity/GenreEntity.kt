@@ -18,9 +18,9 @@ import com.google.gson.annotations.SerializedName
     ]
 )
 data class GenreEntity(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo("genre_id")
-    var genreId: Long,
+    var genreId: Long = 0,
     @ColumnInfo("game_id")
     var gameId: Long,
     @ColumnInfo("name")

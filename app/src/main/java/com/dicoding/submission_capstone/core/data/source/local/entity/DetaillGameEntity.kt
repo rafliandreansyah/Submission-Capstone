@@ -19,7 +19,4 @@ data class DetailGameEntity(
     val rating: Double,
     @ColumnInfo(name = "is_favorite")
     val isFavorite: Boolean = false,
-    val developers: List<String>,
-    val platForms: List<String>,
-    val genre: List<String>
 )
