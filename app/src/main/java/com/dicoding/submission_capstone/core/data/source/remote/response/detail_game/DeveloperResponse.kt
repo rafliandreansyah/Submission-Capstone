@@ -7,7 +7,7 @@ data class DeveloperResponse(
     @SerializedName("games_count")
     var gamesCount: Int?,
     @SerializedName("id")
-    var id: Int?,
+    var id: Long?,
     @SerializedName("image_background")
     var imageBackground: String?,
     @SerializedName("name")
