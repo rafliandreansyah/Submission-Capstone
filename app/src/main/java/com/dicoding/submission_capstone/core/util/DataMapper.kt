@@ -1,10 +1,11 @@
 package com.dicoding.submission_capstone.core.util
 
-import com.dicoding.submission_capstone.core.data.source.local.entity.GameEntity
-import com.dicoding.submission_capstone.core.data.source.local.entity.GenreEntity
-import com.dicoding.submission_capstone.core.data.source.local.entity.PlatformEntity
+import com.dicoding.submission_capstone.core.data.source.local.entity.*
+import com.dicoding.submission_capstone.core.data.source.local.entity.relation.DetailGameWithPlatformsAndGenresAndDevelopers
 import com.dicoding.submission_capstone.core.data.source.local.entity.relation.GameWithPlatformsAndGenres
+import com.dicoding.submission_capstone.core.data.source.remote.response.PlatformResponse
 import com.dicoding.submission_capstone.core.data.source.remote.response.detail_game.DetailGameResponse
+import com.dicoding.submission_capstone.core.data.source.remote.response.detail_game.DeveloperResponse
 import com.dicoding.submission_capstone.core.data.source.remote.response.games.GameResponse
 import com.dicoding.submission_capstone.core.domain.model.DetailGame
 import com.dicoding.submission_capstone.core.domain.model.Game
@@ -32,6 +33,42 @@ object DataMapper {
             developers = detailGameResponse.developers?.map { developer -> developer.name.toString()},
             platForms = detailGameResponse.platforms?.map { platform -> platform.platform?.name.toString() },
             genre = detailGameResponse.genres?.map { genre -> genre.name.toString() }
+        )
+    }
+
+    fun detailGameResponseToDetailGameEntity(detailGameResponse: DetailGameResponse): DetailGameEntity {
+        return DetailGameEntity(
+            detailGameId = detailGameResponse.id ?: 0L,
+            name = detailGameResponse.name ?: "",
+            description = detailGameResponse.descriptionRaw ?: "",
+            backgroundImage = detailGameResponse.backgroundImage ?: "",
+            rating = detailGameResponse.rating ?: 0.0
+        )
+    }
+
+    fun developerResponseToDeveloperEntity(listDeveloperResponse: List<DeveloperResponse>): List<DeveloperEntity> {
+        return listDeveloperResponse.map {
+            DeveloperEntity(
+                developerId = it.id ?: 0L,
+                gameId = 0L,
+                gamesCount = it.gamesCount ?: 0,
+                imageBackground = it.imageBackground ?: "",
+                slug = it.slug ?: "",
+                name = it.name ?: ""
+            )
+        }
+    }
+
+    fun detailGameWithPlatformsAndGenresAndDevelopersToDetailGame(data: DetailGameWithPlatformsAndGenresAndDevelopers): DetailGame {
+        return DetailGame(
+            id = data.detailGame.detailGameId,
+            name = data.detailGame.name,
+            description = data.detailGame.description,
+            backgroundImage = data.detailGame.backgroundImage,
+            rating = data.detailGame.rating,
+            developers = data.listDeveloper.map { it.name },
+            platForms = data.listPlatform.map { it.name },
+            genre = data.listGenre.map { it.name }
         )
     }
 

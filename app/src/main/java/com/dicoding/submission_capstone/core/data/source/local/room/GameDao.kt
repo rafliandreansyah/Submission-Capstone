@@ -85,14 +85,13 @@ interface GameDao {
     }
 
     @Transaction
-    open fun insertDetailGame(
+    fun insertDetailGame(
         detailGameEntity: DetailGameEntity,
         listDeveloper: List<DeveloperEntity>
     ) {
         insertDetailGame(detailGameEntity)
         val developers = listDeveloper.map { developerEntity ->
             DeveloperEntity(
-                developerId = developerEntity.developerId,
                 gameId = detailGameEntity.detailGameId,
                 gamesCount = developerEntity.gamesCount,
                 imageBackground = developerEntity.imageBackground,
@@ -100,6 +99,7 @@ interface GameDao {
                 slug = developerEntity.slug
             )
         }
+        deleteAllDeveloper()
         insertListDeveloper(developers)
     }
 }
