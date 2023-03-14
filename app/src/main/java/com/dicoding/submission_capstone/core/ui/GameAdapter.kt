@@ -16,6 +16,7 @@ import com.dicoding.submission_capstone.databinding.ItemGameBinding
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.qualifiers.ActivityContext
 import dagger.hilt.android.qualifiers.ApplicationContext
+import java.util.*
 import javax.inject.Inject
 
 class GameAdapter @Inject constructor(@ActivityContext private val context: Context): RecyclerView.Adapter<GameAdapter.GamesViewHolder>() {
@@ -56,6 +57,7 @@ class GameAdapter @Inject constructor(@ActivityContext private val context: Cont
 
             binding.tvTitleGame.text = game.name
             val chipGroup = binding.chipGenre
+            chipGroup.removeAllViews()
             game.genres?.forEach {
                 val chip = Chip(context)
                 chip.text = it
@@ -67,13 +69,13 @@ class GameAdapter @Inject constructor(@ActivityContext private val context: Cont
                 chip.isClickable = false
             }
 
-            val platforms = game.platforms
-            binding.icXbox.visibility = if (platforms?.contains("xbox") == true) View.VISIBLE else View.GONE
-            binding.icPlaystation.visibility = if(platforms?.contains("playstation") == true) View.VISIBLE else View.GONE
-            binding.icApple.visibility = if (platforms?.contains("ios") == true || platforms?.contains("mac") == true) View.VISIBLE else View.GONE
-            binding.icAndroid.visibility = if(platforms?.contains("android") == true) View.VISIBLE else View.GONE
-            binding.icWindows.visibility = if (platforms?.contains("pc") == true) View.VISIBLE else View.GONE
-            binding.icLinux.visibility = if(platforms?.contains("linux") == true) View.VISIBLE else View.GONE
+            val platforms = game.platforms.toString().trim().lowercase(Locale.getDefault())
+            binding.icXbox.visibility = if (platforms.contains("xbox")) View.VISIBLE else View.GONE
+            binding.icPlaystation.visibility = if(platforms.contains("playstation")) View.VISIBLE else View.GONE
+            binding.icApple.visibility = if (platforms.contains("ios") || platforms.contains("mac")) View.VISIBLE else View.GONE
+            binding.icAndroid.visibility = if(platforms.contains("android")) View.VISIBLE else View.GONE
+            binding.icWindows.visibility = if (platforms.contains("pc")) View.VISIBLE else View.GONE
+            binding.icLinux.visibility = if(platforms.contains("linux")) View.VISIBLE else View.GONE
 
             binding.clItem.setOnClickListener {
                 game.id?.let { it1 -> listener.invoke(it1) }

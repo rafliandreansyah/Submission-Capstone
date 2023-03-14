@@ -1,6 +1,7 @@
 package com.dicoding.submission_capstone.core.data.source
 
 import android.provider.ContactsContract.Data
+import android.util.Log
 import com.dicoding.submission_capstone.core.data.source.local.LocalDataSource
 import com.dicoding.submission_capstone.core.data.source.remote.RemoteDataSource
 import com.dicoding.submission_capstone.core.data.source.remote.network.ApiResponse
@@ -35,7 +36,12 @@ class GameRepository @Inject constructor(private val remoteDataSource: RemoteDat
                 localDataSource.insertListGameToDatabase(gameData)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe()
+                    .subscribe({
+                        Log.d(GameRepository::class.java.simpleName, "Berhasil saveCallResult")
+                    }, {err ->
+                        err.printStackTrace()
+                        Log.e(GameRepository::class.java.simpleName, "Gagal saveCallResult ${err.message.toString()}")
+                    })
             }
 
             override fun shouldFetch(data: List<Game>): Boolean {

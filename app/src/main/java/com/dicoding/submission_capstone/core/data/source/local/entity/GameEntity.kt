@@ -12,7 +12,5 @@ data class GameEntity (
     @ColumnInfo(name = "background_image_url")
     val backgroundImage: String,
     @ColumnInfo(name = "name")
-    val name: String,
-    @ColumnInfo(name = "is_favorite")
-    val isFavorite: Boolean = false
+    val name: String
 )

@@ -44,7 +44,7 @@ class GamesActivity : AppCompatActivity() {
 
     private fun getDataGames() {
         gameViewModel.dataListGame.observe(this) { dataGames ->
-
+            val data = dataGames.data
             with(binding) {
                 rvGames.layoutManager = LinearLayoutManager(this@GamesActivity)
                 rvGames.adapter = gameAdapter

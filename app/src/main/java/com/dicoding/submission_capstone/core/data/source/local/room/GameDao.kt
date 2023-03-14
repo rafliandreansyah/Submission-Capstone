@@ -16,34 +16,34 @@ import io.reactivex.schedulers.Schedulers
 interface GameDao {
 
     @Query("SELECT * FROM game")
-    abstract fun getListGame(): Flowable<List<GameWithPlatformsAndGenres>>
+    fun getListGame(): Flowable<List<GameWithPlatformsAndGenres>>
 
     @Query("SELECT * FROM detail_game WHERE detail_game_id = :gameId")
-    abstract fun getDetailGame(gameId: Long): Flowable<DetailGameWithPlatformsAndGenresAndDevelopers>
+    fun getDetailGame(gameId: Long): Flowable<DetailGameWithPlatformsAndGenresAndDevelopers>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertGame(games: List<GameEntity>): Completable
+    fun insertGame(games: List<GameEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertListGenre(genres: List<GenreEntity>): Completable
+    fun insertListGenre(genres: List<GenreEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertListPlatform(platforms: List<PlatformEntity>): Completable
+    fun insertListPlatform(platforms: List<PlatformEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertDetailGame(detailGame: DetailGameEntity): Completable
+    fun insertDetailGame(detailGame: DetailGameEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertListDeveloper(developers: List<DeveloperEntity>): Completable
+    fun insertListDeveloper(developers: List<DeveloperEntity>)
 
     @Query("DELETE FROM platform")
-    fun deleteAllPlatform(): Completable
+    fun deleteAllPlatform()
 
     @Query("DELETE FROM genre")
-    abstract fun deleteAllGenre(): Completable
+    fun deleteAllGenre()
 
     @Query("DELETE FROM developer")
-    abstract fun deleteAllDeveloper(): Completable
+    fun deleteAllDeveloper()
 
     @Transaction
     fun insertListGame(games: List<GameWithPlatformsAndGenres>) {
@@ -71,92 +71,16 @@ interface GameDao {
                 )
                 platforms.add(platformData)
             }
-            /*insertGame(gameData.game).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .andThen {
-                    val platforms = gameData.listPlatform.map { platformEntity ->
-                        PlatformEntity(
-                            gameId = gameData.game.gameId,
-                            name = platformEntity.name,
-                            slug = platformEntity.slug
-                        )
-                    }
-                    insertListPlatform(platforms).subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .andThen {
-                            val genres = gameData.listGenre.map { genreEntity ->
-                                GenreEntity(
-                                    gameId = gameData.game.gameId,
-                                    name = genreEntity.name,
-                                    slug = genreEntity.slug
-                                )
-                            }
-                            insertListGenre(genres).subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe({
-                                    Log.d("GAME DAO GENRE", "Sukses")
-                                }, {
-                                    it.printStackTrace()
-                                    Log.e("GAME DAO GENRE", "${it.message}")
-                                })
-                        }
-                        .subscribe({
-                            Log.d("GAME DAO PLATFORM", "Sukses")
-                        }, {
-                            it.printStackTrace()
-                            Log.e("GAME DAO PLATFORM", "${it.message}")
-                        })
-                }
-                .subscribe({
-                    Log.d("GAME DAO", "Sukses")
-
-                }, {
-                    it.printStackTrace()
-                    Log.e("GAME DAO", "${it.message}")
-                })*/
 
 
         }
 
         deleteAllGenre()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .andThen {
-                deleteAllPlatform()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .andThen {
-                        insertGame(gamesData)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .andThen {
-                                insertListGenre(genres)
-                                    .subscribeOn(Schedulers.io())
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribe({
-                                        Log.d("Genres", "Sukses")
-                                    }, {
-                                        Log.e("Genres", "Gagal")
-                                    })
+        deleteAllPlatform()
 
-                                insertListPlatform(
-                                    platforms
-                                ).subscribeOn(Schedulers.io())
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribe({
-                                        Log.d("Platform", "Sukses")
-                                    }, {
-                                        Log.e("Platform", "Gagal")
-                                    })
-                            }
-                            .subscribe({
-                                Log.d("Game", "Sukses")
-                            }, {
-                                Log.e("Game", "Gagal")
-                            })
-                    }
-                    .subscribe()
-            }.subscribe()
+        insertGame(gamesData)
+        insertListGenre(genres)
+        insertListPlatform(platforms)
 
     }
 

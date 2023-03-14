@@ -17,6 +17,4 @@ data class DetailGameEntity(
     val backgroundImage: String,
     @ColumnInfo("rating")
     val rating: Double,
-    @ColumnInfo(name = "is_favorite")
-    val isFavorite: Boolean = false,
 )

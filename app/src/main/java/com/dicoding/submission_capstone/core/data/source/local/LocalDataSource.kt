@@ -1,5 +1,8 @@
 package com.dicoding.submission_capstone.core.data.source.local
 
+import com.dicoding.submission_capstone.core.data.source.local.entity.GameEntity
+import com.dicoding.submission_capstone.core.data.source.local.entity.GenreEntity
+import com.dicoding.submission_capstone.core.data.source.local.entity.PlatformEntity
 import com.dicoding.submission_capstone.core.data.source.local.entity.relation.GameWithPlatformsAndGenres
 import com.dicoding.submission_capstone.core.data.source.local.room.GameDao
 import io.reactivex.Completable
@@ -9,7 +12,7 @@ import javax.inject.Inject
 class LocalDataSource @Inject constructor(private val gameDao: GameDao) {
 
     fun insertListGameToDatabase(listGame: List<GameWithPlatformsAndGenres>): Completable {
-        return Completable.fromAction {
+        return Completable.fromCallable {
             gameDao.insertListGame(listGame)
         }
     }
