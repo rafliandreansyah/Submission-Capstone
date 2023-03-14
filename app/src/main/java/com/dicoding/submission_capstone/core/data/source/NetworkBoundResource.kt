@@ -1,5 +1,6 @@
 package com.dicoding.submission_capstone.core.data.source
 
+import android.util.Log
 import com.dicoding.submission_capstone.core.data.source.remote.network.ApiResponse
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
@@ -21,7 +22,7 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .take(1)
-            .subscribe {value ->
+            .subscribe( { value ->
                 dbSource.unsubscribeOn(Schedulers.io())
                 if (shouldFetch(value)) {
                     fetchFromNetwork()
@@ -29,7 +30,10 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
                 else {
                     result.onNext(Resource.Success(value))
                 }
-            }
+            }, {
+                it.printStackTrace()
+                Log.e(NetworkBoundResource::class.java.simpleName, "Error ${it.message}")
+            })
         mCompositeDisposable.add(db)
     }
 

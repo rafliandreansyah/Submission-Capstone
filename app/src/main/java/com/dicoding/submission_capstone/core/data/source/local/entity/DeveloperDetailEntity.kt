@@ -4,25 +4,24 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import com.google.gson.annotations.SerializedName
 
 @Entity(
-    tableName = "developer",
+    tableName = "developer_detail",
     foreignKeys = [
         ForeignKey(
             entity = DetailGameEntity::class,
             parentColumns = ["detail_game_id"],
-            childColumns = ["game_id"],
+            childColumns = ["detail_game_id"],
             onDelete = ForeignKey.CASCADE
         )
     ]
 )
-data class DeveloperEntity(
+data class DeveloperDetailEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo("developer_id")
     var developerId: Long = 0,
-    @ColumnInfo("game_id")
-    var gameId: Long,
+    @ColumnInfo("detail_game_id")
+    var detailGameId: Long,
     @ColumnInfo("games_count")
     var gamesCount: Int,
     @ColumnInfo("image_background_url")

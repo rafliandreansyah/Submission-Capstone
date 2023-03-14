@@ -9,11 +9,13 @@ import com.dicoding.submission_capstone.core.data.source.local.entity.PlatformEn
 data class GameWithPlatformsAndGenres(
     @Embedded val game: GameEntity,
     @Relation(
+        entity = PlatformEntity::class,
         parentColumn = "game_id",
         entityColumn = "game_id"
     )
     val listPlatform: List<PlatformEntity>,
     @Relation(
+        entity = GenreEntity::class,
         parentColumn = "game_id",
         entityColumn = "game_id"
     )

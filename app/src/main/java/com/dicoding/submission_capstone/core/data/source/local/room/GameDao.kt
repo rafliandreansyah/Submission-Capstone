@@ -1,25 +1,21 @@
 package com.dicoding.submission_capstone.core.data.source.local.room
 
-import android.util.Log
 import androidx.room.*
 import com.dicoding.submission_capstone.core.data.source.local.entity.*
 import com.dicoding.submission_capstone.core.data.source.local.entity.relation.DetailGameWithPlatformsAndGenresAndDevelopers
 import com.dicoding.submission_capstone.core.data.source.local.entity.relation.GameWithPlatformsAndGenres
-import com.dicoding.submission_capstone.core.domain.model.DetailGame
-import io.reactivex.Completable
 import io.reactivex.Flowable
-import io.reactivex.Scheduler
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 
 @Dao
 interface GameDao {
 
+    @Transaction
     @Query("SELECT * FROM game")
     fun getListGame(): Flowable<List<GameWithPlatformsAndGenres>>
 
+    @Transaction
     @Query("SELECT * FROM detail_game WHERE detail_game_id = :gameId")
-    fun getDetailGame(gameId: Long): Flowable<DetailGameWithPlatformsAndGenresAndDevelopers>
+    fun getDetailGame(gameId: Int): Flowable<DetailGameWithPlatformsAndGenresAndDevelopers>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertGame(games: List<GameEntity>)
@@ -34,7 +30,13 @@ interface GameDao {
     fun insertDetailGame(detailGame: DetailGameEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertListDeveloper(developers: List<DeveloperEntity>)
+    fun insertListDeveloperDetail(developers: List<DeveloperDetailEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertListGenreDetail(developers: List<GenreDetailEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertListPlatformDetail(developers: List<PlatformDetailEntity>)
 
     @Query("DELETE FROM platform")
     fun deleteAllPlatform()
@@ -42,8 +44,14 @@ interface GameDao {
     @Query("DELETE FROM genre")
     fun deleteAllGenre()
 
-    @Query("DELETE FROM developer")
-    fun deleteAllDeveloper()
+    @Query("DELETE FROM developer_detail")
+    fun deleteAllDeveloperDetail()
+
+    @Query("DELETE FROM genre_detail")
+    fun deleteAllGenreDetail()
+
+    @Query("DELETE FROM platform_detail")
+    fun deleteAllPlatformDetail()
 
     @Transaction
     fun insertListGame(games: List<GameWithPlatformsAndGenres>) {
@@ -85,21 +93,45 @@ interface GameDao {
     }
 
     @Transaction
-    fun insertDetailGame(
-        detailGameEntity: DetailGameEntity,
-        listDeveloper: List<DeveloperEntity>
+    fun insertDetailGameTransaction(
+        detailGame :DetailGameWithPlatformsAndGenresAndDevelopers
     ) {
-        insertDetailGame(detailGameEntity)
-        val developers = listDeveloper.map { developerEntity ->
-            DeveloperEntity(
-                gameId = detailGameEntity.detailGameId,
-                gamesCount = developerEntity.gamesCount,
-                imageBackground = developerEntity.imageBackground,
-                name = developerEntity.name,
-                slug = developerEntity.slug
+
+        deleteAllDeveloperDetail()
+        deleteAllPlatformDetail()
+        deleteAllGenreDetail()
+
+        insertDetailGame(detailGame.detailGame)
+
+        val developersDetail = detailGame.listDeveloper.map { data ->
+            DeveloperDetailEntity(
+                detailGameId = detailGame.detailGame.detailGameId,
+                gamesCount = data.gamesCount,
+                imageBackground = data.imageBackground,
+                name = data.name,
+                slug = data.slug
             )
         }
-        deleteAllDeveloper()
-        insertListDeveloper(developers)
+        insertListDeveloperDetail(developersDetail)
+
+        val genresDetail = detailGame.listGenre.map { data ->
+            GenreDetailEntity(
+                detailGameId = detailGame.detailGame.detailGameId,
+                name = data.name,
+                slug = data.slug
+            )
+        }
+        insertListGenreDetail(genresDetail)
+
+        val platformDetail = detailGame.listPlatform.map { data ->
+            PlatformDetailEntity(
+                detailGameId = detailGame.detailGame.detailGameId,
+                name = data.name,
+                slug = data.slug
+            )
+        }
+        insertListPlatformDetail(platformDetail)
+
+
     }
 }

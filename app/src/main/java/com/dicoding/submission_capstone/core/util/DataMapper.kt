@@ -3,13 +3,11 @@ package com.dicoding.submission_capstone.core.util
 import com.dicoding.submission_capstone.core.data.source.local.entity.*
 import com.dicoding.submission_capstone.core.data.source.local.entity.relation.DetailGameWithPlatformsAndGenresAndDevelopers
 import com.dicoding.submission_capstone.core.data.source.local.entity.relation.GameWithPlatformsAndGenres
-import com.dicoding.submission_capstone.core.data.source.remote.response.PlatformResponse
 import com.dicoding.submission_capstone.core.data.source.remote.response.detail_game.DetailGameResponse
 import com.dicoding.submission_capstone.core.data.source.remote.response.detail_game.DeveloperResponse
 import com.dicoding.submission_capstone.core.data.source.remote.response.games.GameResponse
 import com.dicoding.submission_capstone.core.domain.model.DetailGame
 import com.dicoding.submission_capstone.core.domain.model.Game
-import okhttp3.internal.platform.Platform
 
 object DataMapper {
 
@@ -36,21 +34,53 @@ object DataMapper {
         )
     }
 
-    fun detailGameResponseToDetailGameEntity(detailGameResponse: DetailGameResponse): DetailGameEntity {
-        return DetailGameEntity(
-            detailGameId = detailGameResponse.id ?: 0L,
-            name = detailGameResponse.name ?: "",
-            description = detailGameResponse.descriptionRaw ?: "",
-            backgroundImage = detailGameResponse.backgroundImage ?: "",
-            rating = detailGameResponse.rating ?: 0.0
+    fun detailGameResponseToDetailGameWithPlatformsAndGenresAndDevelopers(detailGameResponse: DetailGameResponse): DetailGameWithPlatformsAndGenresAndDevelopers {
+        val listGenreDetail = detailGameResponse.genres?.map {
+            GenreDetailEntity(
+                genreId = it.id ?: 0L,
+                detailGameId = 0L,
+                name = it.name ?: "",
+                slug = it.slug ?: ""
+            )
+        }
+        val listPlatformDetail = detailGameResponse.platforms?.map {
+            PlatformDetailEntity(
+                platformId = it.platform?.id ?: 0L,
+                detailGameId = 0L,
+                name = it.platform?.name ?: "",
+                slug = it.platform?.slug ?: ""
+            )
+        }
+        val listDeveloperDetail = detailGameResponse.developers?.map {
+            DeveloperDetailEntity(
+                developerId = it.id ?: 0L,
+                detailGameId = 0L,
+                gamesCount = it.gamesCount ?: 0,
+                imageBackground = it.imageBackground ?: "",
+                name = it.name ?: "",
+                slug = it.slug ?: ""
+            )
+        }
+        return DetailGameWithPlatformsAndGenresAndDevelopers(
+            detailGame = DetailGameEntity(
+                detailGameId = detailGameResponse.id ?: 0L,
+                name = detailGameResponse.name ?: "",
+                description = detailGameResponse.description ?: "",
+                backgroundImage = detailGameResponse.backgroundImage ?: "",
+                rating = detailGameResponse.rating ?: 0.0
+            ),
+            listDeveloper = listDeveloperDetail ?: listOf(),
+            listPlatform = listPlatformDetail ?: listOf(),
+            listGenre = listGenreDetail ?: listOf()
+
         )
     }
 
-    fun developerResponseToDeveloperEntity(listDeveloperResponse: List<DeveloperResponse>): List<DeveloperEntity> {
+    fun developerResponseToDeveloperEntity(listDeveloperResponse: List<DeveloperResponse>): List<DeveloperDetailEntity> {
         return listDeveloperResponse.map {
-            DeveloperEntity(
+            DeveloperDetailEntity(
                 developerId = it.id ?: 0L,
-                gameId = 0L,
+                detailGameId = 0L,
                 gamesCount = it.gamesCount ?: 0,
                 imageBackground = it.imageBackground ?: "",
                 slug = it.slug ?: "",
@@ -59,16 +89,16 @@ object DataMapper {
         }
     }
 
-    fun detailGameWithPlatformsAndGenresAndDevelopersToDetailGame(data: DetailGameWithPlatformsAndGenresAndDevelopers): DetailGame {
+    fun detailGameWithPlatformsAndGenresAndDevelopersToDetailGame(dataDetail: DetailGameWithPlatformsAndGenresAndDevelopers): DetailGame {
         return DetailGame(
-            id = data.detailGame.detailGameId,
-            name = data.detailGame.name,
-            description = data.detailGame.description,
-            backgroundImage = data.detailGame.backgroundImage,
-            rating = data.detailGame.rating,
-            developers = data.listDeveloper.map { it.name },
-            platForms = data.listPlatform.map { it.name },
-            genre = data.listGenre.map { it.name }
+            id = dataDetail.detailGame.detailGameId,
+            name = dataDetail.detailGame.name,
+            description = dataDetail.detailGame.description,
+            backgroundImage = dataDetail.detailGame.backgroundImage,
+            rating = dataDetail.detailGame.rating,
+            developers = dataDetail.listDeveloper.map { it.name },
+            platForms = dataDetail.listPlatform.map { it.name },
+            genre = dataDetail.listGenre.map { it.name }
         )
     }
 

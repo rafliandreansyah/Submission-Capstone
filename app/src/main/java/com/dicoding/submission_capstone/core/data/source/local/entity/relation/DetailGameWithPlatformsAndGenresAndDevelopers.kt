@@ -2,26 +2,26 @@ package com.dicoding.submission_capstone.core.data.source.local.entity.relation
 
 import androidx.room.Embedded
 import androidx.room.Relation
-import com.dicoding.submission_capstone.core.data.source.local.entity.DetailGameEntity
-import com.dicoding.submission_capstone.core.data.source.local.entity.DeveloperEntity
-import com.dicoding.submission_capstone.core.data.source.local.entity.GenreEntity
-import com.dicoding.submission_capstone.core.domain.model.DetailGame
+import com.dicoding.submission_capstone.core.data.source.local.entity.*
 
 data class DetailGameWithPlatformsAndGenresAndDevelopers(
     @Embedded val detailGame: DetailGameEntity,
     @Relation(
+        entity = DeveloperDetailEntity::class,
         parentColumn = "detail_game_id",
-        entityColumn = "game_id",
+        entityColumn = "detail_game_id",
     )
-    val listDeveloper: List<DeveloperEntity>,
+    val listDeveloper: List<DeveloperDetailEntity>,
     @Relation(
+        entity = GenreDetailEntity::class,
         parentColumn = "detail_game_id",
-        entityColumn = "game_id",
+        entityColumn = "detail_game_id",
     )
-    val listGenre: List<GenreEntity>,
+    val listGenre: List<GenreDetailEntity>,
     @Relation(
+        entity = PlatformDetailEntity::class,
         parentColumn = "detail_game_id",
-        entityColumn = "game_id",
+        entityColumn = "detail_game_id",
     )
-    val listPlatform: List<DeveloperEntity>
+    val listPlatform: List<PlatformDetailEntity>
 )
