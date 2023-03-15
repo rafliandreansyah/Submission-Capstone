@@ -9,9 +9,7 @@ import com.dicoding.submission_capstone.core.data.source.local.entity.*
     DetailGameEntity::class,
     GenreEntity::class,
     PlatformEntity::class,
-    DeveloperDetailEntity::class,
-    GenreDetailEntity::class,
-    PlatformDetailEntity::class
+    DeveloperEntity::class
                      ], version = 1)
 abstract class GameDatabase: RoomDatabase() {
     abstract fun gameDao(): GameDao

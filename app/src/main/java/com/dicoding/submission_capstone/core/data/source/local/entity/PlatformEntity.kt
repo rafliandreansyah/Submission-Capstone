@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName
 @Entity(tableName = "platform", foreignKeys = [
     ForeignKey(
         entity = GameEntity::class,
-        parentColumns = ["game_id"],
+        parentColumns = ["id"],
         childColumns = ["game_id"],
         onDelete = ForeignKey.CASCADE
     )

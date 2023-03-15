@@ -4,10 +4,9 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import com.google.gson.annotations.SerializedName
 
 @Entity(
-    tableName = "genre",
+    tableName = "developer",
     foreignKeys = [
         ForeignKey(
             entity = GameEntity::class,
@@ -17,14 +16,14 @@ import com.google.gson.annotations.SerializedName
         )
     ]
 )
-data class GenreEntity(
+data class DeveloperEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo("id")
-    var genreId: Long = 0,
+    val developerId: Long = 0,
     @ColumnInfo("game_id")
-    var gameId: Long,
+    val gameId: Long,
     @ColumnInfo("name")
-    var name: String,
+    val name: String,
     @ColumnInfo("slug")
-    var slug: String
+    val slug: String
 )

@@ -1,25 +1,18 @@
 package com.dicoding.submission_capstone.core.data.source
 
-import android.provider.ContactsContract.Data
 import android.util.Log
 import com.dicoding.submission_capstone.core.data.source.local.LocalDataSource
-import com.dicoding.submission_capstone.core.data.source.local.entity.relation.DetailGameWithPlatformsAndGenresAndDevelopers
 import com.dicoding.submission_capstone.core.data.source.remote.RemoteDataSource
 import com.dicoding.submission_capstone.core.data.source.remote.network.ApiResponse
-import com.dicoding.submission_capstone.core.data.source.remote.network.ApiService
 import com.dicoding.submission_capstone.core.data.source.remote.response.detail_game.DetailGameResponse
 import com.dicoding.submission_capstone.core.data.source.remote.response.games.GameResponse
-import com.dicoding.submission_capstone.core.data.source.remote.response.games.ListGameResponse
 import com.dicoding.submission_capstone.core.domain.model.DetailGame
 import com.dicoding.submission_capstone.core.domain.model.Game
 import com.dicoding.submission_capstone.core.domain.repository.IGamesRepository
 import com.dicoding.submission_capstone.core.util.DataMapper
-import io.reactivex.BackpressureStrategy
-import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 
 class GameRepository @Inject constructor(private val remoteDataSource: RemoteDataSource, private val localDataSource: LocalDataSource): IGamesRepository {
@@ -58,7 +51,7 @@ class GameRepository @Inject constructor(private val remoteDataSource: RemoteDat
         return object : NetworkBoundResource<DetailGame, DetailGameResponse>(){
             override fun loadFromDb(): Flowable<DetailGame> {
                 return localDataSource.getDetailGame(id).map { data ->
-                    DataMapper.detailGameWithPlatformsAndGenresAndDevelopersToDetailGame(data)
+                    DataMapper.gameWithDetailDataToDetailGame(data)
                 }
             }
 
@@ -67,7 +60,7 @@ class GameRepository @Inject constructor(private val remoteDataSource: RemoteDat
             }
 
             override fun saveCallResult(data: DetailGameResponse) {
-                localDataSource.insertDetailGameToDatabase(DataMapper.detailGameResponseToDetailGameWithPlatformsAndGenresAndDevelopers(data))
+                localDataSource.insertDetailGameToDatabase(DataMapper.detailGameResponseToGameWithDetailData(data))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({

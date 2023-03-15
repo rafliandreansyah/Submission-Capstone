@@ -2,19 +2,28 @@ package com.dicoding.submission_capstone.core.data.source.local.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import com.dicoding.submission_capstone.core.domain.model.Game
 
-@Entity(tableName = "detail_game")
+@Entity(
+    tableName = "detail_game",
+    foreignKeys = [
+        ForeignKey(
+            entity = GameEntity::class,
+            parentColumns = ["id"],
+            childColumns = ["game_id"]
+        )
+    ]
+)
 data class DetailGameEntity(
-    @PrimaryKey
-    @ColumnInfo("detail_game_id")
-    val detailGameId: Long,
-    @ColumnInfo("name")
-    val name: String,
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo("id")
+    val id: Long = 0,
+    @ColumnInfo("game_id")
+    val gameId: Long,
     @ColumnInfo("description")
     val description: String,
-    @ColumnInfo("background_image_url")
-    val backgroundImage: String,
     @ColumnInfo("rating")
     val rating: Double,
 )

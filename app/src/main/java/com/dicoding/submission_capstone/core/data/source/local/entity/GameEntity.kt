@@ -7,8 +7,8 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "game")
 data class GameEntity (
     @PrimaryKey
-    @ColumnInfo(name = "game_id")
-    val gameId: Long,
+    @ColumnInfo(name = "id")
+    val id: Long,
     @ColumnInfo(name = "background_image_url")
     val backgroundImage: String,
     @ColumnInfo(name = "name")
