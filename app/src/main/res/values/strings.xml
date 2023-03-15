@@ -19,4 +19,6 @@
     <string name="developer">Developer</string>
     <string name="save_to_favorite">Save To Favorite</string>
     <string name="button_to_favorite">Button to favorite</string>
+    <string name="your_favorite_game">Your Favorite Game</string>
+    <string name="favorite_game_your_best_choice">Favorite game your best choice</string>
 </resources>

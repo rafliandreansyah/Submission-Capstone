@@ -11,7 +11,7 @@ import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
 
 @HiltViewModel
-class GameViewModel @Inject constructor(val gameUseCase: GameUseCase): ViewModel() {
+class GameViewModel @Inject constructor(gameUseCase: GameUseCase): ViewModel() {
 
     val dataListGame = LiveDataReactiveStreams.fromPublisher(gameUseCase.getGames())
 
