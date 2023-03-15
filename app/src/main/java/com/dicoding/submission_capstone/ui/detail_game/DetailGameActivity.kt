@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -42,6 +43,10 @@ class DetailGameActivity : AppCompatActivity() {
         }
 
         getDataDetailGame(detailGameViewModel.idGame)
+
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
     }
 
     private fun getDataDetailGame(idGame: Long) {

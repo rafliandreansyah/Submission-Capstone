@@ -29,26 +29,14 @@ class GamesActivity : AppCompatActivity() {
         binding = ActivityGamesBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        with(binding) {
-
-            swipeRefreshLayout.setOnRefreshListener {
-                swipeRefreshLayout.isRefreshing = false
-                getDataGames()
-
-            }
-
-        }
-
         getDataGames()
     }
 
     private fun getDataGames() {
         gameViewModel.dataListGame.observe(this) { dataGames ->
-            val data = dataGames.data
             with(binding) {
                 rvGames.layoutManager = LinearLayoutManager(this@GamesActivity)
                 rvGames.adapter = gameAdapter
-                rvGames.setNestedScrollingEnabled(false);
                 gameAdapter.setOnItemClickListener {
                     val intent = Intent(this@GamesActivity, DetailGameActivity::class.java)
                     intent.putExtra(DetailGameActivity.GAME_ID, it)
