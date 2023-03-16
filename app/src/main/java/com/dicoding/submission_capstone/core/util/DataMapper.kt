@@ -57,7 +57,8 @@ object DataMapper {
             rating = dataDetail.detailGame?.rating,
             developers = dataDetail.listDeveloper.map { it.name },
             platForms = dataDetail.listPlatform.map { it.name },
-            genre = dataDetail.listGenre.map { it.name }
+            genre = dataDetail.listGenre.map { it.name },
+            isFavorite = dataDetail.game.isFavorite
         )
     }
 
@@ -105,6 +106,15 @@ object DataMapper {
             )
         }
 
+    }
+
+    fun detailGameToGameEntity(detailGame: DetailGame): GameEntity {
+        return GameEntity(
+            id = detailGame.id ?: 0,
+            backgroundImage = detailGame.backgroundImage ?: "",
+            name = detailGame.name ?: "",
+            isFavorite = detailGame.isFavorite
+        )
     }
 
 }

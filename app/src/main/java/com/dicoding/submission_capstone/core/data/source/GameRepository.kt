@@ -76,35 +76,20 @@ class GameRepository @Inject constructor(private val remoteDataSource: RemoteDat
             }
 
         }.asFlowable()
+    }
 
+    override fun saveDetailGameToFavorite(detailGame: DetailGame) {
+        val data = DataMapper.detailGameToGameEntity(detailGame)
+        localDataSource.updateFavoriteGame(data)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe()
+    }
 
-//        val resultData = PublishSubject.create<Resource<DetailGame>>()
-//
-//        resultData.onNext(Resource.Loading())
-//        val dataResponse = remoteDataSource.getDetailGame(id)
-//        dataResponse
-//            .subscribeOn(Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .take(1)
-//            .subscribe {detailGameResponse ->
-//                when(detailGameResponse) {
-//                    is ApiResponse.Success -> {
-//                        dataResponse.unsubscribeOn(Schedulers.io())
-//                        resultData.onNext(Resource.Success(DataMapper.detailGameResponseToDetailGame(detailGameResponse.data)))
-//                    }
-//                    is ApiResponse.Empty -> {
-//                        dataResponse.unsubscribeOn(Schedulers.io())
-//                        resultData.onNext(Resource.Success(null))
-//
-//                    }
-//                    is ApiResponse.Error -> {
-//                        dataResponse.unsubscribeOn(Schedulers.io())
-//                        resultData.onNext(Resource.Error(detailGameResponse.errorMessage))
-//                    }
-//                }
-//            }
-//
-//        return resultData.toFlowable(BackpressureStrategy.BUFFER)
+    override fun getFavoriteGames(): Flowable<List<Game>> {
+        return localDataSource.getListFavoriteGame().map { data ->
+            DataMapper.gameWithPlatformsAndGenresToGame(data)
+        }
     }
 
 

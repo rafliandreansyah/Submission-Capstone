@@ -12,6 +12,7 @@ import com.dicoding.submission_capstone.core.data.source.Resource
 import com.dicoding.submission_capstone.core.ui.GameAdapter
 import com.dicoding.submission_capstone.databinding.ActivityGamesBinding
 import com.dicoding.submission_capstone.ui.detail_game.DetailGameActivity
+import com.dicoding.submission_capstone.ui.favorite.FavoriteActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -29,6 +30,13 @@ class GamesActivity : AppCompatActivity() {
         binding = ActivityGamesBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.btnMenuFavorite.setOnClickListener {
+            startActivity(Intent(this@GamesActivity, FavoriteActivity::class.java))
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
         getDataGames()
     }
 

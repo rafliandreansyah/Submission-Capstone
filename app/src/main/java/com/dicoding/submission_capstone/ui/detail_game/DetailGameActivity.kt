@@ -47,6 +47,7 @@ class DetailGameActivity : AppCompatActivity() {
         binding.btnBack.setOnClickListener {
             finish()
         }
+        binding.btnSaveFavorite.isVisible = false
     }
 
     private fun getDataDetailGame(idGame: Long) {
@@ -76,9 +77,19 @@ class DetailGameActivity : AppCompatActivity() {
 
     private fun setDataToView(detailGameData: DetailGame){
         with(binding) {
+            btnSaveFavorite.isVisible = true
 
             btnBack.setOnClickListener {
                 finish()
+            }
+
+            statusFavorite(detailGameData.isFavorite)
+            btnSaveFavorite.setOnClickListener {
+                val data = detailGameData.copy(
+                    isFavorite = !detailGameData.isFavorite
+                )
+                detailGameViewModel.saveToFavorite(data)
+                statusFavorite(data.isFavorite)
             }
 
             Glide.with(this@DetailGameActivity)
@@ -127,6 +138,16 @@ class DetailGameActivity : AppCompatActivity() {
                 loading.isVisible = false
                 scrollView.isVisible = true
             }
+        }
+    }
+
+    private fun statusFavorite(isFavorite: Boolean) {
+        if (isFavorite){
+            binding.btnSaveFavorite.text = resources.getText(R.string.remove_to_favorite)
+            binding.btnSaveFavorite.setBackgroundColor(ContextCompat.getColor(this@DetailGameActivity, R.color.colorRed))
+        } else {
+            binding.btnSaveFavorite.text = resources.getText(R.string.save_to_favorite)
+            binding.btnSaveFavorite.setBackgroundColor(ContextCompat.getColor(this@DetailGameActivity, R.color.colorTeal))
         }
     }
 }

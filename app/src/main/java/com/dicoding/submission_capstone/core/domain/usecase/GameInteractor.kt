@@ -11,5 +11,12 @@ class GameInteractor @Inject constructor(private val gamesRepository: IGamesRepo
 
     override fun getGames(): Flowable<Resource<List<Game>>> = gamesRepository.getGames()
     override fun getDetailGames(id: Long): Flowable<Resource<DetailGame>> = gamesRepository.getDetailGame(id)
+    override fun updateGameDetailFavorite(detailGame: DetailGame) {
+        gamesRepository.saveDetailGameToFavorite(detailGame)
+    }
+
+    override fun getListFavoriteGame(): Flowable<List<Game>> {
+        return gamesRepository.getFavoriteGames()
+    }
 
 }

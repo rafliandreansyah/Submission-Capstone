@@ -24,4 +24,9 @@ class LocalDataSource @Inject constructor(private val gameDao: GameDao) {
         }
     }
 
+    fun updateFavoriteGame(gameEntity: GameEntity): Completable {
+        return gameDao.updateFavoriteGame(gameEntity)
+    }
+
+    fun getListFavoriteGame() = gameDao.getListFavoriteGame()
 }

@@ -4,6 +4,7 @@ import androidx.room.*
 import com.dicoding.submission_capstone.core.data.source.local.entity.*
 import com.dicoding.submission_capstone.core.data.source.local.entity.relation.GameWithDetailData
 import com.dicoding.submission_capstone.core.data.source.local.entity.relation.GameWithPlatformsAndGenres
+import io.reactivex.Completable
 import io.reactivex.Flowable
 
 @Dao
@@ -12,6 +13,9 @@ interface GameDao {
     @Transaction
     @Query("SELECT * FROM game")
     fun getListGame(): Flowable<List<GameWithPlatformsAndGenres>>
+
+    @Query("SELECT * FROM game WHERE is_favorite = 1")
+    fun getListFavoriteGame(): Flowable<List<GameWithPlatformsAndGenres>>
 
     @Transaction
     @Query("SELECT * FROM game WHERE id = :id")
@@ -38,8 +42,8 @@ interface GameDao {
     @Query("DELETE FROM genre")
     fun deleteAllGenre()
 
-    @Query("DELETE FROM developer")
-    fun deleteAllDeveloper()
+    @Update
+    fun updateFavoriteGame(gameEntity: GameEntity): Completable
 
     @Transaction
     fun insertListGame(games: List<GameWithPlatformsAndGenres>) {

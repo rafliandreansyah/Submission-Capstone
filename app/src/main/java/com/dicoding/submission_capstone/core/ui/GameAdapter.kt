@@ -8,6 +8,7 @@ import android.view.View
 import android.view.View.TEXT_ALIGNMENT_CENTER
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dicoding.submission_capstone.R
@@ -80,6 +81,7 @@ class GameAdapter @Inject constructor(@ActivityContext private val context: Cont
             binding.clItem.setOnClickListener {
                 game.id?.let { it1 -> listener.invoke(it1) }
             }
+
         }
 
     }

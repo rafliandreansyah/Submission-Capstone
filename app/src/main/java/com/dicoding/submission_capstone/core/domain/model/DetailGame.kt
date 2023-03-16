@@ -10,5 +10,6 @@ data class DetailGame(
     var rating: Double?,
     var developers: List<String>?,
     var platForms: List<String>?,
-    var genre: List<String>?
+    var genre: List<String>?,
+    var isFavorite: Boolean = false
 )
