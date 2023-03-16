@@ -15,9 +15,6 @@
         android:theme="@style/Theme.SubmissionCapstone"
         tools:targetApi="31">
         <activity
-            android:name=".ui.favorite.FavoriteActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.detail_game.DetailGameActivity"
             android:exported="false" />
         <activity

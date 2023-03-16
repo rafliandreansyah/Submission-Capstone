@@ -1,6 +1,7 @@
 package com.dicoding.submission_capstone.ui.home
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -12,7 +13,8 @@ import com.dicoding.submission_capstone.core.data.source.Resource
 import com.dicoding.submission_capstone.core.ui.GameAdapter
 import com.dicoding.submission_capstone.databinding.ActivityGamesBinding
 import com.dicoding.submission_capstone.ui.detail_game.DetailGameActivity
-import com.dicoding.submission_capstone.ui.favorite.FavoriteActivity
+import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
+import com.google.android.play.core.splitinstall.SplitInstallRequest
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -31,8 +33,39 @@ class GamesActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnMenuFavorite.setOnClickListener {
-            startActivity(Intent(this@GamesActivity, FavoriteActivity::class.java))
+            try {
+                installFavoriteModule()
+            }catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(this@GamesActivity, "Module not found", Toast.LENGTH_SHORT).show()
+            }
         }
+    }
+
+    private fun installFavoriteModule() {
+        val splitInstallManager = SplitInstallManagerFactory.create(this)
+        val favoriteModule = "favorite"
+        if (splitInstallManager.installedModules.contains(favoriteModule)) {
+            moveToFavorite()
+        } else {
+            val request = SplitInstallRequest.newBuilder()
+                .addModule(favoriteModule)
+                .build()
+
+            splitInstallManager.startInstall(request)
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Success installing Favorite", Toast.LENGTH_SHORT).show()
+                    moveToFavorite()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "Error installing Favorite", Toast.LENGTH_SHORT).show()
+                }
+        }
+    }
+
+    private fun moveToFavorite() {
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("submission_capstone://favorite")))
+
     }
 
     override fun onResume() {
@@ -61,7 +94,7 @@ class GamesActivity : AppCompatActivity() {
                         Toast.makeText(this@GamesActivity, dataGames.message, Toast.LENGTH_SHORT).show()
                         Log.e(GamesActivity::class.java.simpleName, "Error: ${dataGames.message}")
                     }
-                    is Resource.Loading -> {
+                    else -> {
                         isLoading(true)
                     }
                 }

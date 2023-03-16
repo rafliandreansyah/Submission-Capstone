@@ -5,7 +5,8 @@ plugins {
     id 'com.google.dagger.hilt.android'
 }
 
-apply from:'../shared_dependencies.gradle'
+apply from: '../shared_dependencies.gradle'
+
 
 android {
     namespace 'com.dicoding.submission_capstone.favorite'
@@ -25,6 +26,6 @@ android {
 }
 
 dependencies {
+    implementation project(":app")
     implementation project(":core")
-    androidTestImplementation 'androidx.annotation:annotation:1.6.0'
 }
