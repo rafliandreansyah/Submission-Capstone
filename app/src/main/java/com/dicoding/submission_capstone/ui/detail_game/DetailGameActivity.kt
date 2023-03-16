@@ -1,13 +1,11 @@
 package com.dicoding.submission_capstone.ui.detail_game
 
 import android.graphics.Paint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.TextViewCompat
@@ -17,7 +15,6 @@ import com.dicoding.submission_capstone.core.data.source.Resource
 import com.dicoding.submission_capstone.core.domain.model.DetailGame
 import com.dicoding.submission_capstone.databinding.ActivityDetailGameBinding
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class DetailGameActivity : AppCompatActivity() {
@@ -56,7 +53,7 @@ class DetailGameActivity : AppCompatActivity() {
                 is Resource.Success -> {
                     isLoading(false)
                     if (detailGame.data != null) {
-                        setDataToView(detailGame.data)
+                        setDataToView(detailGame.data!!)
                     } else {
                         Toast.makeText(this, "Data not found", Toast.LENGTH_SHORT).show()
                     }

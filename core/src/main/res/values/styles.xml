@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TextTitleBoldStyle_30SP">
+        <item name="android:textSize">30sp</item>
+        <item name="fontFamily">@font/roboto_mono_bold</item>
+    </style>
+
+    <style name="TextTitleBoldStyle_26SP">
+        <item name="android:textSize">26sp</item>
+        <item name="fontFamily">@font/roboto_mono_bold</item>
+    </style>
+
+    <style name="TextTitleBoldStyle_20SP">
+        <item name="android:textSize">20sp</item>
+        <item name="fontFamily">@font/roboto_mono_bold</item>
+    </style>
+
+    <style name="TextLabelMediumStyle">
+        <item name="fontFamily">@font/roboto_mono_medium</item>
+    </style>
+
+    <style name="TextLabelRegular">
+        <item name="android:textColor">@color/colorPurpleLight</item>
+        <item name="fontFamily">@font/roboto_mono_medium</item>
+    </style>
+
+    <style name="TextLabelRegular_16SP">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/colorPurpleLight</item>
+        <item name="fontFamily">@font/roboto_mono</item>
+    </style>
+
+    <style name="TextLight">
+        <item name="fontFamily">@font/roboto_mono_light</item>
+    </style>
+
+    <style name="TextRegular_12SP">
+        <item name="fontFamily">@font/roboto_mono_light</item>
+    </style>
+
+</resources>
