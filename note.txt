@@ -1,0 +1,5 @@
+keystore:
+
+file name: submissioncapstonekeystore
+alias: submissioncapstonekeystore
+pass: amaterasu
