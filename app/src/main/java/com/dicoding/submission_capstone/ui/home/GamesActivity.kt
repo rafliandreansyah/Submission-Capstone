@@ -91,6 +91,8 @@ class GamesActivity : AppCompatActivity() {
                     }
                     is Resource.Error -> {
                         isLoading(false)
+                        tvErrorMessage.isVisible = true
+                        tvErrorMessage.text = dataGames.message
                         Toast.makeText(this@GamesActivity, dataGames.message, Toast.LENGTH_SHORT).show()
                         Log.e(GamesActivity::class.java.simpleName, "Error: ${dataGames.message}")
                     }
