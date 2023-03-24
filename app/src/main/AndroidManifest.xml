@@ -18,9 +18,6 @@
             android:name=".ui.detail_game.DetailGameActivity"
             android:exported="false" />
         <activity
-            android:name="com.dicoding.submission_capstone.MainActivity"
-            android:exported="true" />
-        <activity
             android:name=".ui.home.GamesActivity"
             android:exported="true">
             <intent-filter>

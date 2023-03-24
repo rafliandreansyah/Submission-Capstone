@@ -26,7 +26,7 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
             .take(1)
             .subscribe({response ->
                 val listGame = response.results
-                resultData.onNext((if (listGame?.isNotEmpty() == true) ApiResponse.Success(listGame) else ApiResponse.Empty) as ApiResponse<List<GameResponse>>)
+                resultData.onNext((if (listGame?.isNotEmpty() == true) ApiResponse.Success(listGame) else ApiResponse.Empty))
             }, { error ->
                 error.printStackTrace()
                 resultData.onNext(ApiResponse.Error(error.message.toString()))
