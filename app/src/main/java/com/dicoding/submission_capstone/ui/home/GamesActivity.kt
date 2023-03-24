@@ -87,7 +87,7 @@ class GamesActivity : AppCompatActivity() {
                 when(dataGames) {
                     is Resource.Success -> {
                         isLoading(false)
-                        gameAdapter.setData(dataGames.data ?: ArrayList())
+                        gameAdapter.submitList(dataGames.data)
                     }
                     is Resource.Error -> {
                         isLoading(false)

@@ -57,8 +57,7 @@ class FavoriteActivity : AppCompatActivity() {
 
                     rvGames.layoutManager = LinearLayoutManager(this@FavoriteActivity)
                     rvGames.adapter = gameAdapter
-                    gameAdapter.setData(listGameFavorite)
-                    gameAdapter.notifyDataSetChanged()
+                    gameAdapter.submitList(listGameFavorite)
 
                     gameAdapter.setOnItemClickListener {
                         val intent = Intent(this@FavoriteActivity, DetailGameActivity::class.java)

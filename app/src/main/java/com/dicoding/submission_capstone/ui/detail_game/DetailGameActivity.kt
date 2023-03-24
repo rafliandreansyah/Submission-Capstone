@@ -64,7 +64,7 @@ class DetailGameActivity : AppCompatActivity() {
                     Toast.makeText(this@DetailGameActivity, detailGame.message, Toast.LENGTH_SHORT).show()
 
                 }
-                is Resource.Loading -> {
+                else -> {
                     isLoading(true)
                 }
             }

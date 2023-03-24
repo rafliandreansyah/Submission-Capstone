@@ -7,6 +7,8 @@ import android.view.View
 import android.view.View.TEXT_ALIGNMENT_CENTER
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dicoding.submission_capstone.core.R
@@ -17,14 +19,22 @@ import dagger.hilt.android.qualifiers.ActivityContext
 import java.util.*
 import javax.inject.Inject
 
-class GameAdapter @Inject constructor(@ActivityContext private val context: Context): RecyclerView.Adapter<GameAdapter.GamesViewHolder>() {
+class GameAdapter @Inject constructor(@ActivityContext private val context: Context): ListAdapter<Game, GameAdapter.GamesViewHolder>(DIFF_CALLBACK) {
 
-    private var listGame: List<Game>? = null
-    private lateinit var listener: (id: Long) -> Unit
-    fun setData(listGame: List<Game>) {
-        this.listGame = listGame
+    companion object{
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Game>(){
+            override fun areItemsTheSame(oldItem: Game, newItem: Game): Boolean {
+                return oldItem == newItem
+            }
+
+            override fun areContentsTheSame(oldItem: Game, newItem: Game): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+        }
     }
 
+    private lateinit var listener: (id: Long) -> Unit
     fun setOnItemClickListener(listener: (id: Long) -> Unit){
         this.listener = listener
     }
@@ -33,16 +43,12 @@ class GameAdapter @Inject constructor(@ActivityContext private val context: Cont
         parent: ViewGroup,
         viewType: Int
     ): GamesViewHolder {
-        val itemBinding = ItemGameBinding.inflate(LayoutInflater.from(parent.context), parent, false);
+        val itemBinding = ItemGameBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return GamesViewHolder(itemBinding)
     }
 
-    override fun getItemCount(): Int = if (listGame != null) listGame!!.size else 0
-
     override fun onBindViewHolder(holder: GamesViewHolder, position: Int) {
-        if (listGame != null) {
-            holder.bind(listGame!![position])
-        }
+        holder.bind(getItem(position))
     }
 
     inner class GamesViewHolder(private val binding: ItemGameBinding): RecyclerView.ViewHolder(binding.root) {
