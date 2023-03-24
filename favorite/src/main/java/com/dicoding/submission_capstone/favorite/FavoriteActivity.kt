@@ -62,6 +62,7 @@ class FavoriteActivity : AppCompatActivity() {
                     gameAdapter.setOnItemClickListener {
                         val intent = Intent(this@FavoriteActivity, DetailGameActivity::class.java)
                         intent.putExtra(DetailGameActivity.GAME_ID, it)
+                        intent.putExtra(DetailGameActivity.IS_FAVORITE, true)
                         startActivity(intent)
                     }
 

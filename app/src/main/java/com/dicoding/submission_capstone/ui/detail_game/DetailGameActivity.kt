@@ -21,6 +21,7 @@ class DetailGameActivity : AppCompatActivity() {
 
     companion object {
         const val GAME_ID = "GAME_ID"
+        const val IS_FAVORITE = "IS_FAVORITE"
     }
 
     private lateinit var binding: ActivityDetailGameBinding
@@ -33,6 +34,7 @@ class DetailGameActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         detailGameViewModel.idGame = intent.getLongExtra(GAME_ID, 0L)
+        detailGameViewModel.isFavorite = intent.getBooleanExtra(IS_FAVORITE, false)
         if (detailGameViewModel.idGame == 0L) {
             finish()
             Toast.makeText(this, "Data not found", Toast.LENGTH_SHORT).show()
@@ -87,6 +89,11 @@ class DetailGameActivity : AppCompatActivity() {
                 )
                 detailGameViewModel.saveToFavorite(data)
                 statusFavorite(data.isFavorite)
+                btnSaveFavorite.isEnabled = !data.isFavorite
+                if (detailGameViewModel.isFavorite) {
+                    btnSaveFavorite.isVisible = false
+                    finish()
+                }
             }
 
             Glide.with(this@DetailGameActivity)

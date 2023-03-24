@@ -11,6 +11,7 @@ import javax.inject.Inject
 class DetailGameViewModel @Inject constructor(private val gameUseCase: GameUseCase): ViewModel() {
 
     var idGame: Long = 0
+    var isFavorite: Boolean = false;
     fun getDetailGame(id: Long) = LiveDataReactiveStreams.fromPublisher(gameUseCase.getDetailGames(id))
 
     fun saveToFavorite(detailGame: DetailGame) = gameUseCase.updateGameDetailFavorite(detailGame)
