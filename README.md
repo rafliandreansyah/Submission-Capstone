@@ -10,6 +10,7 @@
  - Encryption Database SQLite
  - HILT Dependency Injection
  - Modularization
+ - Simple CI/CD menggunakan Circle CI
  
  #### SS App:
  
