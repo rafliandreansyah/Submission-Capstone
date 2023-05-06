@@ -1,4 +1,5 @@
 # Submission-Capstone
+![Submission Dicoding Android MVVM Pattern](https://user-images.githubusercontent.com/47078618/236594201-ab0dce9e-e816-4388-bb68-f51517981638.png)
 ### Project ini untuk submission dicoding pada kelas Menjadi Android Developer Expert Dengan MVVM Pattern
 
 #### Library And Feature:
